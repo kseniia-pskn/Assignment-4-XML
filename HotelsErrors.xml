@@ -2,7 +2,7 @@
 <Hotel> <!-- Error 1: Root element should be "Hotels" -->
   <Hotel>
     <Name>Westin</Name>
-    <Address NearestAirport="Sky Harbor">
+    <Address NearstAirport="Sky Harbor">
       <Number>11</Number>
       <Street>E 7th St</Street>
       <City>Tempe</City>
@@ -16,7 +16,7 @@
 
   <Hotel>
     <Name>Marriott</Name>
-    <Address NearestAirport="Phoenix Sky Harbor">
+    <Address NearstAirport="Phoenix Sky Harbor">
       <Number>45</Number>
       <Street>N Central Ave</Street>
       <City>Phoenix</City>
