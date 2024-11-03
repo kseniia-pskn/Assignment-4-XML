@@ -7,10 +7,9 @@ namespace ConsoleApp1
 {
     public class Program
     {
-        // Local file paths for macOS
-        public static string xmlURL = "/Users/kseniia.piskun/Desktop/Assignment4_XMLProject/Hotels.xml";
-        public static string xmlErrorURL = "/Users/kseniia.piskun/Desktop/Assignment4_XMLProject/HotelsErrors.xml";
-        public static string xsdURL = "/Users/kseniia.piskun/Desktop/Assignment4_XMLProject/Hotels.xsd";
+        public static string xmlURL = "https://www.public.asu.edu/~kpiskun/Hotels.xml";
+        public static string xmlErrorURL = "https://www.public.asu.edu/~kpiskun/HotelsErrors.xml";
+        public static string xsdURL = "https://www.public.asu.edu/~kpiskun/Hotels.xsd";
 
         public static void Main(string[] args)
         {
@@ -56,21 +55,25 @@ namespace ConsoleApp1
             }
         }
 
-        public static string Xml2Json(string xmlFilePath)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(xmlFilePath);
+        public static string Xml2Json(string xmlUrl)
+{
+    XmlDocument doc = new XmlDocument();
+    doc.Load(xmlUrl);
 
-            // Convert XML to JSON string using Newtonsoft.Json
-            string jsonText = JsonConvert.SerializeXmlNode(doc, Newtonsoft.Json.Formatting.Indented, true);
+    // Remove XML declaration
+    doc.RemoveChild(doc.FirstChild);
 
-            // Manually remove empty "Rating" fields if necessary (JSON.NET does not handle this in .NET 4.5)
-            if (jsonText.Contains("\"_Rating\": null"))
-            {
-                jsonText = jsonText.Replace("\"_Rating\": null,", "");
-            }
+    // Convert XML to JSON string using Newtonsoft.Json
+    string jsonText = JsonConvert.SerializeXmlNode(doc, Newtonsoft.Json.Formatting.Indented, true);
 
-            return jsonText;
-        }
+    // Manually remove empty "_Rating" fields if necessary
+    if (jsonText.Contains("\"_Rating\": null"))
+    {
+        jsonText = jsonText.Replace("\"_Rating\": null,", "");
+    }
+
+    return jsonText;
+}
+
     }
 }
