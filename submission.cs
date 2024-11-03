@@ -59,18 +59,16 @@ public static string Xml2Json(string xmlUrl)
     XmlDocument doc = new XmlDocument();
     doc.Load(xmlUrl);
 
-    // Convert XML to JSON string without additional formatting
+    // Convert XML to JSON string
     string jsonText = JsonConvert.SerializeXmlNode(doc);
 
-    // Remove the XML declaration and attributes prefixes
-    jsonText = jsonText.Replace("{\"?xml\":{\"@version\":\"1.0\",\"@encoding\":\"UTF-8\"},", "");
-    jsonText = jsonText.Replace("@", "");
+    // Clean up JSON output
+    jsonText = jsonText.Replace("{\"?xml\":{\"@version\":\"1.0\",\"@encoding\":\"UTF-8\"},", "{");
+    jsonText = jsonText.Replace("@", ""); // Remove "@" prefixes
+    jsonText = jsonText.Replace("?_declaration", ""); // Remove potential XML declaration artifacts
 
-    // Wrap JSON output in curly braces to ensure it's a valid JSON object
-    jsonText = "{" + jsonText + "}";
-
+    // Return cleaned JSON text
     return jsonText;
 }
-
     }
 }

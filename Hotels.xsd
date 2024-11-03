@@ -20,7 +20,7 @@
                             </xs:element>
                             <xs:element name="Phone" type="xs:string" maxOccurs="unbounded"/>
                         </xs:sequence>
-                        <xs:attribute name="Rating" type="xs:decimal" use="optional"/>
+                        <xs:attribute name="Rating" type="xs:decimal" use="required"/>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
