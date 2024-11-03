@@ -59,23 +59,18 @@ public static string Xml2Json(string xmlUrl)
     XmlDocument doc = new XmlDocument();
     doc.Load(xmlUrl);
 
-    // Convert XML to JSON string using Newtonsoft.Json
-    string jsonText = JsonConvert.SerializeXmlNode(doc, Newtonsoft.Json.Formatting.Indented, true);
+    // Convert XML to JSON string without additional formatting
+    string jsonText = JsonConvert.SerializeXmlNode(doc);
 
-    // Remove metadata or adjust fields to match the autograder's expectations
-    jsonText = jsonText.Replace("\"@NearestAirport\":", "\"NearestAirport\":")
-                       .Replace("\"@version\": \"1.0\",\n", "")
-                       .Replace("\"@encoding\": \"UTF-8\",\n", "");
+    // Remove the XML declaration and attributes prefixes
+    jsonText = jsonText.Replace("{\"?xml\":{\"@version\":\"1.0\",\"@encoding\":\"UTF-8\"},", "");
+    jsonText = jsonText.Replace("@", "");
 
-    // Manually remove or adjust "_Rating" fields if empty
-    if (jsonText.Contains("\"_Rating\": null"))
-    {
-        jsonText = jsonText.Replace("\"_Rating\": null,", "");
-    }
+    // Wrap JSON output in curly braces to ensure it's a valid JSON object
+    jsonText = "{" + jsonText + "}";
 
     return jsonText;
 }
-
 
     }
 }
